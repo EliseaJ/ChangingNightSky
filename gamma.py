@@ -68,9 +68,7 @@ def next_event(rate, period_of_time):
         #round_time = round(timeprinted, 3)
         #time_ml = round_time * 1000
         #root.after(int(round_time * 1000), new_srg)
-class NegitiveTime(Exception):
-    pass
-
+  
         
 def main():
     ## prepare a basic canvas
@@ -117,30 +115,24 @@ def main():
         frequency_range = 1
         #random.randint(2,100)
         frequency = ((erfinv(ran2) + frequency_mean) * frequency_range)
-        if (frequency <= 0):
-                raise NegitiveTime
-        if (Amp <= 0):
-                raise NegitiveTime
-        
-        mytow = 500
+
+        mytow = 50
         def howlongsgrlasts():
                 return 180
 
         for i in range(howlongsgrlasts()):
-                w.delete('all')
                 center = (srgx, srgy)
                 #need to add an equation for the aplitude right before perenthisis.
                 decay = i - 0
-                rounded_num = round(math.pi*frequency/frames*decay)
-                decrese_speed_of_change = 0.1
-                size = Amp * (1 + math.sin(2 * math.pi * frequency * decay*.25 ))/2
-                decay_size = size * math.exp (-decay/mytow) /10000000
+                rounded_num = round(math.pi*frequency*decay)
+                size = Amp * (1 + math.sin(2 * math.pi * frequency * decay))/2
+                decay_size = size * math.exp (-decay/mytow) /1000000
                 var_radius = decay_size
                 w.create_oval(center[0]-var_radius, center[1]-var_radius,
                               center[0]+var_radius, center[1]+var_radius,
                               fill=color)
                 w.update()
-                time.sleep(1/5)
+                time.sleep(1/25)
                 #update_time = (1/25 * 1000)
                 #time.sleep(decay_size/Amp/(1+math.sin))
                 #root.after(int(decay_size/Amp/(1+math.sin)), root.update())    # 24 frames per second
