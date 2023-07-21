@@ -22,7 +22,7 @@ filmtime = 60
 filmwaitunits = 1
 timeoflastevent = 0
 
-
+name = 0
 
 def main():
     ## prepare a basic canvas
@@ -33,53 +33,19 @@ def main():
                bg = 'black')
     w.pack()   	# boiler-plate: we always call pack() on tk windows
 
-    def next_event(rate, period_of_time):
-        mm = rate / period_of_time
-        R1 = random.random()
-        t1 = timeoflastevent -( math.log(1 - R1)) / mm
-        timeprinted = t1 / period_of_time * (filmtime * filmwaitunits)
-        
-        #next three lines of code only work if definition is inside main loop
-        round_time = round(timeprinted, 3)
-        #time_ml = round_time * 1000
-        root.after((int((round_time) * 1000)), new_srg())
     
     def radius():
+        """Changes the radius of the circle. Adds to loop_start every time it
+is called"""
         global loop_start
         loop_start += 1
         Radius = 5 * ( 1 + math.sin(loop_start * frames  * srgtime))
         return Radius
 
-    def new_sgr():
-        canvas_id = SGR(w)
-        next_event(default_rate, one_year)
-        #time.sleep makes whole code stop which is bad
-        #time.sleep(timeprinted)
-        
-    def next_event(rate, period_of_time):
-        mm = rate / period_of_time
-        R1 = random.random()
-        t1 = timeoflastevent -( math.log(1 - R1)) / mm
-        timeprinted = t1 / period_of_time * (filmtime * filmwaitunits)
-        #want to later change code and add on the time of the last
-        #event to he new equation so the time of last event is added
-        #to time of next event timeoflastevent = curently is set to 0
-        #time.sleep makes whole code stop which is bad
-    #    time.sleep(timeprinted)
-        
-        #next three lines of code only work if definition is inside main loop
-        round_time = round(timeprinted, 3)
-        #time_ml = round_time * 1000
-        root.after((int((round_time) * 1000)), new_srg())
-
-
-
     class SGR:
         
-        def __init__(self, canvas):
+        def __init__(self, canvas, x, y):
             loop_num = 0
-            x = random.randint(0, canvas_width)
-            y = random.randint(0, canvas_height)
             self.pulse(x, y)
             
             # def create(xcor, ycor):
@@ -97,8 +63,34 @@ def main():
             w.update()
             root.after(1000, self.pulse(x, y))
 
+    def next_event(rate, period_of_time):
+        """Determines when the next event will happen"""
+        mm = rate / period_of_time
+        R1 = random.random()
+        t1 = timeoflastevent -( math.log(1 - R1)) / mm
+        timeprinted = t1 / period_of_time * (filmtime * next)
         
-    next_event(default_rate, one_year)
+        #filmwaitunits three lines of code only work if definition is inside main loop
+        round_time = round(timeprinted, 3)
+        #time_ml = round_time * 1000
+        root.after((int((round_time) * 1000)), new_srg())
+
+    def new_sgr():
+        """Creates a new soft gamma repeater and adds it to a list"""
+        global name
+        name += 1
+        x = random.randint(0, canvas_width)
+        y = random.randint(0, canvas_height)
+        name = SGR(w, x, y)
+        #for i in range():
+         #   canvas_id = SGR(w)
+          #  circle.append(canvas_id)
+        next_event(default_rate, one_year)
+        #time.sleep makes whole code stop which is bad
+        #time.sleep(timeprinted)
+
+        
+    new_sgr()
         #Origin = SGR(w)
 
 #root.after(10000,lambda: root.destroy())
