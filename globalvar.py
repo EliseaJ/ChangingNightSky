@@ -25,35 +25,38 @@ def main():
                bg = 'black')
     w.pack()   	# boiler-plate: we always call pack() on tk windows
 
-def radius():
-    global loop_start
-    loop_start += 1
-    Radius = 5 * ( 1 + math.sin(loop_start  * frames  * srgtime))
-    return Radius
+    def radius():
+        global loop_start
+        loop_start += 1
+        Radius = 5 * ( 1 + math.sin(loop_start * frames  * srgtime))
+        return Radius
 
 
-class SGR:
+    class SGR:
         
-    def __init__(self):
-        loop_num = 0
-        x = random.randint(0, canvas_width)
-        y = random.randint(0, canvas_height)
-        self.pulse(x, y)
+        def __init__(self, canvas):
+            loop_num = 0
+            x = random.randint(0, canvas_width)
+            y = random.randint(0, canvas_height)
+            self.pulse(x, y)
+            
+            # def create(xcor, ycor):
+            
+        def pulse(self, xcor, ycor):
+            color = 'blue'
+            center = [xcor, ycor]
+            frames = 25
+            var_radius = radius()
+            w.create_oval(center[0]-var_radius, center[1]-var_radius,
+                          center[0]+var_radius, center[1]+var_radius,
+                          fill=color)
+            x = xcor
+            y = ycor
+            w.update()
+            root.after(1000, self.pulse(x, y))
 
-   # def create(xcor, ycor):
-        
-    def pulse(self, xcor, ycor):
-        center = [(xcor, ycor)]
-        frames = 25
-        var_radius = radius()
-        Canvas.create_oval(center[0]-var_radius, center[1]-var_radius,
-                           center[0]+var_radius, center[1]+var_radius,
-                           fill=color)
-        Canvas.update()
-        root.after(1000, self.pulse())
 
-
-Origin = SGR()
+    Origin = SGR(w)
 
 #root.after(10000,lambda: root.destroy())
         
