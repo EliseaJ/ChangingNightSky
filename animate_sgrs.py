@@ -8,26 +8,6 @@ canvas_width = 360 * pixel_per_degrees
 canvas_height = 180 * pixel_per_degrees
 framespersec = 24
 
-def main():
-    #
-    root = Tk()
-    w = Canvas(root,
-               width=canvas_width,
-               height=canvas_height,
-               bg = 'black')
-    w.pack()
-    ##define a time parameter for the universe
-    time_param = 0
-    static_star_list = make_sstars(4000, 500)
-    draw_stars(w, static_star_list, 1, 'blue')
-    SGR_list = make_SGRs(20)
-    print('SGRs:', SGR_list)
-    #initial drawing of SGRs
-    draw_SGRs(w, SGR_list, 'white', time_param)
-    #now kick off the animation
-    root.after(1000 // framespersec, update_sky, root, w, SGR_list, time_param)
-    mainloop()
-
 def make_sstars(n_stars_milkyway, n_stars_spreadout):
     """Creates regular static stars background"""
     
@@ -65,6 +45,28 @@ def make_sstars(n_stars_milkyway, n_stars_spreadout):
                
     return static_star_list
 
+static_star_list = make_sstars(4000, 500)
+    
+def main():
+    #
+    root = Tk()
+    w = Canvas(root,
+               width=canvas_width,
+               height=canvas_height,
+               bg = 'black')
+    w.pack()
+    ##define a time parameter for the universe
+    time_param = 0
+    draw_stars(w, static_star_list, 1, 'blue')
+    SGR_list = make_SGRs(5)
+    print('SGRs:', SGR_list)
+    #initial drawing of SGRs
+    draw_SGRs(w, SGR_list, 'white', time_param)
+    #now kick off the animation
+    root.after(1000 // framespersec, update_sky, root, w, SGR_list, time_param)
+    mainloop()
+
+
 def make_SGRs(n_stars):
     """Create SGRs, These are more elaborate than fixed stars."""
     centerlist = []
@@ -101,13 +103,13 @@ def draw_SGRs(w, stars, color, time_param):
         # are quite
         if countdown >= 0:
             ##first time for this one -we have to creat oval
-               radius = 5 * (1 + math.sin(countdown * framespersec))
-               #countdown = random.randint(0, period_sec) * framespersec
-               canvas_id = w.create_oval(x-radius, y-radius,
-                                         x+radius, y+radius,
-                                         fill=color)
-               w.itemconfig(canvas_id, state='normal')
-               countdown += 1
+            radius = 5 * (1 + math.sin(countdown * framespersec))
+            #countdown = random.randint(0, period_sec) * framespersec
+            canvas_id = w.create_oval(x-radius, y-radius,
+                                      x+radius, y+radius,
+                                      fill=color)
+            w.itemconfig(canvas_id, state='normal')
+            countdown += 1
         elif countdown < 0:
             print('negitive countdown')
             ##all the other times loop runs
@@ -124,8 +126,10 @@ def draw_SGRs(w, stars, color, time_param):
         stars[i] = sgr
 
 def update_sky(the_root, w, SGRs, time_param):
+    w.delete('all')
     """Draws the Changing parts of the sky -- mostly the SGRs."""
     print('updating...')
+    draw_stars(w, static_star_list, 1, 'blue')
     draw_SGRs(w, SGRs, 'white', time_param)
     w.update()
     the_root.after(1000 // framespersec, update_sky, the_root, w, SGRs, time_param)
