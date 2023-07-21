@@ -126,11 +126,12 @@ def main():
                 return 180
 
         for i in range(howlongsgrlasts()):
+                w.delete('all')
                 center = (srgx, srgy)
                 #need to add an equation for the aplitude right before
                 #perenthisis.
-                decay = i - 0
-                rounded_num = round(math.pi*frequency*decay)
+                decay = i - 0 / .1
+                rounded_num = round(1)
                 size = Amp * (1 + math.sin(2 * math.pi * frequency * decay))/2
                 decay_size = size * math.exp (-decay/mytow) /1000000
                 var_radius = decay_size
@@ -138,7 +139,7 @@ def main():
                               center[0]+var_radius, center[1]+var_radius,
                               fill=color)
                 w.update()
-                time.sleep(1/25)
+                time.sleep(1/5)
                 #update_time = (1/25 * 1000)
                 #time.sleep(decay_size/Amp/(1+math.sin))
                 #root.after(int(decay_size/Amp/(1+math.sin)), root.update())    

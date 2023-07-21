@@ -36,9 +36,7 @@ filmwaitunits = 1
 timeoflastevent = 0
 
 
-#creates  regular static stars. then apends adding values to the list.
-
-
+#creates  regular static stars. then apends adding values to the 
 def sstars():
     """Creates regular static stars"""
     
@@ -74,6 +72,7 @@ def sstars():
         if coslat > thin_poles:
             static_star_list.append((x, y))
             
+
     return static_star_list
 
 
