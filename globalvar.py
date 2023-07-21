@@ -16,6 +16,14 @@ frames = 25
 srgtime = 0.5
 loop_start = 1
 
+default_rate = 50.3
+one_year = 365.25
+filmtime = 60
+filmwaitunits = 1
+timeoflastevent = 0
+
+
+
 def main():
     ## prepare a basic canvas
     root = Tk()
@@ -25,12 +33,29 @@ def main():
                bg = 'black')
     w.pack()   	# boiler-plate: we always call pack() on tk windows
 
+    def next_event(rate, period_of_time):
+        mm = rate / period_of_time
+        R1 = random.random()
+        t1 = timeoflastevent -( math.log(1 - R1)) / mm
+        timeprinted = t1 / period_of_time * (filmtime * filmwaitunits)
+        
+        #next three lines of code only work if definition is inside main loop
+        round_time = round(timeprinted, 3)
+        #time_ml = round_time * 1000
+        root.after((int((round_time) * 1000)), new_srg())
+    
     def radius():
         global loop_start
         loop_start += 1
         Radius = 5 * ( 1 + math.sin(loop_start * frames  * srgtime))
         return Radius
 
+    def new_sgr():
+        canvas_id = SGR(w)
+        next_event(default_rate, one_year)
+        #time.sleep makes whole code stop which is bad
+        #time.sleep(timeprinted)
+        
     def next_event(rate, period_of_time):
         mm = rate / period_of_time
         R1 = random.random()
@@ -45,18 +70,8 @@ def main():
         #next three lines of code only work if definition is inside main loop
         round_time = round(timeprinted, 3)
         #time_ml = round_time * 1000
-        root.after(int(round_time) * 1000), new_srg())
+        root.after((int((round_time) * 1000)), new_srg())
 
-    def new_sgr():
-        canvas_id = SGR(w)
-        next_event()
-        #time.sleep makes whole code stop which is bad
-        #time.sleep(timeprinted)
-        
-        #next three lines of code only work if definition is inside main loop
-        #round_time = round(timeprinted, 3)
-        #time_ml = round_time * 1000
-        #root.after(int(round_time * 1000), new_srg)
 
 
     class SGR:
@@ -83,7 +98,7 @@ def main():
             root.after(1000, self.pulse(x, y))
 
         
-    
+    next_event(default_rate, one_year)
         #Origin = SGR(w)
 
 #root.after(10000,lambda: root.destroy())
