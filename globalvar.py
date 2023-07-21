@@ -31,6 +31,33 @@ def main():
         Radius = 5 * ( 1 + math.sin(loop_start * frames  * srgtime))
         return Radius
 
+    def next_event(rate, period_of_time):
+        mm = rate / period_of_time
+        R1 = random.random()
+        t1 = timeoflastevent -( math.log(1 - R1)) / mm
+        timeprinted = t1 / period_of_time * (filmtime * filmwaitunits)
+        #want to later change code and add on the time of the last
+        #event to he new equation so the time of last event is added
+        #to time of next event timeoflastevent = curently is set to 0
+        #time.sleep makes whole code stop which is bad
+    #    time.sleep(timeprinted)
+        
+        #next three lines of code only work if definition is inside main loop
+        round_time = round(timeprinted, 3)
+        #time_ml = round_time * 1000
+        root.after(int(round_time) * 1000), new_srg())
+
+    def new_sgr():
+        canvas_id = SGR(w)
+        next_event()
+        #time.sleep makes whole code stop which is bad
+        #time.sleep(timeprinted)
+        
+        #next three lines of code only work if definition is inside main loop
+        #round_time = round(timeprinted, 3)
+        #time_ml = round_time * 1000
+        #root.after(int(round_time * 1000), new_srg)
+
 
     class SGR:
         
@@ -55,8 +82,9 @@ def main():
             w.update()
             root.after(1000, self.pulse(x, y))
 
-
-    Origin = SGR(w)
+        
+    
+        #Origin = SGR(w)
 
 #root.after(10000,lambda: root.destroy())
         
