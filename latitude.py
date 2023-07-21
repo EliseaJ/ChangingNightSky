@@ -4,7 +4,16 @@ import random
 from itertools import cycle
 import sys
 
-#sets the canvas width and hight but keep in mind that the stars are not proportional to the night sky they won't get biger with the screen for smaller
+## we use the tkinter widget set; this seems to come automatically
+## with python3 on ubuntu 16.04, but on some systems one might need to
+## install a package with a name like python3-tk
+from tkinter import *
+from tkinter import ttk
+from scipy.special import erfinv, erf
+
+#sets the canvas width and hight but keep in mind that the stars are
+#not proportional to the night sky they won't get biger with the
+#screen for smaller
 pixil_per_degree = 3
 canvas_width = 360 * pixil_per_degree
 canvas_height = 180 * pixil_per_degree
@@ -13,7 +22,9 @@ milkyway = canvas_height / 2
 #additional code for a list. iter returns the next value of the code.
 l = [1, 2, 3]
 l_iter = iter(l)
-#the frames of the code and how long it takes a gama ray to repeat needs to be a function. how long sgrlasts is how long th loop lasts about seconds. Why 60 = 
+#the frames of the code and how long it takes a gama ray to repeat
+#needs to be a function. how long sgrlasts is how long th loop lasts
+#about seconds. Why 60 =
 frames = 25
 srgtime = 0.5
 
@@ -24,16 +35,12 @@ filmtime = 60
 filmwaitunits = 1
 timeoflastevent = 0
 
-## we use the tkinter widget set; this seems to come automatically
-## with python3 on ubuntu 16.04, but on some systems one might need to
-## install a package with a name like python3-tk
-from tkinter import *
-from tkinter import ttk
-from scipy.special import erfinv, erf
+
 #creates  regular static stars. then apends adding values to the list.
 
 
 def sstars():
+    """Creates regular static stars"""
     
     #Stars centered around the center
     static_star_list = []

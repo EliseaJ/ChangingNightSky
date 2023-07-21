@@ -1,3 +1,4 @@
+#All of import statements
 import math
 import time
 import random
@@ -9,9 +10,11 @@ from scipy.special import erfinv, erf
 from mesa import Agent, Model
 from mesa.time import RandomActivation
 
-#var_radius = 5 * ( 1 + math.sin(1  * frames  * srgtime))
+canvas_width = 360
+canvas_height = 180
 frames = 25
 srgtime = 0.5
+loop_start = 1
 
 def main():
     ## prepare a basic canvas
@@ -22,33 +25,37 @@ def main():
                bg = 'black')
     w.pack()   	# boiler-plate: we always call pack() on tk windows
 
+def radius():
+    global loop_start
+    loop_start += 1
+    Radius = 5 * ( 1 + math.sin(loop_start  * frames  * srgtime))
+    return Radius
+
 
 class SGR:
         
-  #    color = 'blue'
-
     def __init__(self):
+        loop_num = 0
         x = random.randint(0, canvas_width)
         y = random.randint(0, canvas_height)
         self.pulse(x, y)
 
    # def create(xcor, ycor):
         
-    def pulse(xcor, ycor):
-        for i in range (20):
-            center = [(xcor, ycor)]
-            frames = 25
-            var_radius = 5 * ( 1 + math.sin(i  * 25  * srgtime))
-            w.create_oval(center[0]-var_radius, center[1]-var_radius,
-                          center[0]+var_radius, center[1]+var_radius,
-                          fill=color)
-            w.update()
-        root.after(40, self.pulse())
+    def pulse(self, xcor, ycor):
+        center = [(xcor, ycor)]
+        frames = 25
+        var_radius = radius()
+        Canvas.create_oval(center[0]-var_radius, center[1]-var_radius,
+                           center[0]+var_radius, center[1]+var_radius,
+                           fill=color)
+        Canvas.update()
+        root.after(1000, self.pulse())
 
 
 Origin = SGR()
 
-root.after(10000,lambda: root.destroy())
+#root.after(10000,lambda: root.destroy())
         
         ## update the canvas
    # mainloop()
