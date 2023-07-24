@@ -17,7 +17,7 @@ def make_sstars(n_stars_milkyway, n_stars_spreadout):
 
         longitude = random.uniform(-180,180)
         ranlat = random.uniform(-1, 1)
-        latitude = erfinv(ranlat) * 10
+        latitude = erfinv(ranlat) * 5
         #latitude = random.uniform(-90, 90)
 
         coslat = math.cos( latitude * math.pi / 180)
@@ -58,7 +58,7 @@ def main():
     ##define a time parameter for the universe
     time_param = 0
     draw_stars(w, static_star_list, 1, 'blue')
-    SGR_list = make_SGRs(5)
+    SGR_list = make_SGRs(1)
     print('SGRs:', SGR_list)
     #initial drawing of SGRs
     draw_SGRs(w, SGR_list, 'white', time_param)
@@ -82,6 +82,7 @@ def make_SGRs(n_stars):
         countdown = 0
         canvas_id = None # id of all object
         centerlist.append((sgrx, sgry, period_sec, countdown, canvas_id))
+        print(centerlist)
     return centerlist
 
 def draw_stars(w, stars, radius, color):
@@ -122,7 +123,7 @@ def draw_SGRs(w, stars, color, time_param):
           #     countdown -= 1
           ##nonw we are done updating all the state informatin
           ## it back into the sgr list
-        sgr = [x, y, period_sec, countdown, canvas_id]
+        sgr = (x, y, period_sec, countdown, canvas_id)
         stars[i] = sgr
 
 def update_sky(the_root, w, SGRs, time_param):
@@ -130,6 +131,10 @@ def update_sky(the_root, w, SGRs, time_param):
     """Draws the Changing parts of the sky -- mostly the SGRs."""
     print('updating...')
     draw_stars(w, static_star_list, 1, 'blue')
+    new_sgr = make_SGRs(1)
+   # print('new list:', new_sgr)
+    SGRs.extend(new_sgr)
+   # print('full list:', SGRs)
     draw_SGRs(w, SGRs, 'white', time_param)
     w.update()
     the_root.after(1000 // framespersec, update_sky, the_root, w, SGRs, time_param)

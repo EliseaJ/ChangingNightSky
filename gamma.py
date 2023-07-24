@@ -139,7 +139,7 @@ def main():
                               center[0]+var_radius, center[1]+var_radius,
                               fill=color)
                 w.update()
-                time.sleep(1/5)
+                time.sleep(1/25)
                 #update_time = (1/25 * 1000)
                 #time.sleep(decay_size/Amp/(1+math.sin))
                 #root.after(int(decay_size/Amp/(1+math.sin)), root.update())    
