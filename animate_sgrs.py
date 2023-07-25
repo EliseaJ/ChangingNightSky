@@ -1,7 +1,10 @@
+import time
 import math
 import random
 from tkinter import Canvas, Tk, mainloop
 from scipy.special import erfinv, erf
+
+random.seed(5)
 
 pixel_per_degrees = 3
 canvas_width = 360 * pixel_per_degrees
@@ -11,22 +14,23 @@ rate_sgr = 5 #days
 time_scale = 365.25 #days
 filmtime = 60
 
-def time_list(filmtime, time_scale):
-    mm = rate / period_of_time
-    R1 = random.random()
-    t1 = timeoflastevent -( math.log(1 - R1)) / mm
-    timeprinted = t1 / period_of_time * (filmtime * filmwaitunits)
-    #want to later change code and add on the time of the last event
-    #to he new equation so the time of last event is added to time of
-    #next event timeoflastevent = curently is set to 0
-    
-    #time.sleep makes whole code stop which is bad
-    time.sleep(timeprinted)
-    
-    #next three lines of code only work if definition is inside main loop
-    #round_time = round(timeprinted, 3)
-    #time_ml = round_time * 1000
-    #root.after(int(round_time * 1000), new_srg)
+def time_list(rate, period_of_time):
+    next_event = []
+    while sum(next_event) < filmtime * 1000:
+        mm = rate / period_of_time
+        R1 = random.random()
+        #gives you a result in days
+        t1 =  -( math.log(1 - R1)) / mm
+        #gives you the result converted to scale of film (365 days in
+        #milliseconds)
+        timeprinted = (t1 / period_of_time) * (filmtime * 1000)
+        next_event.append(timeprinted)
+    print('sgr appear times:', next_event)
+    return next_event
+
+time_till_next_srg = time_list(rate_sgr, time_scale)
+
+time_iter = iter(time_till_next_srg)
 
 def make_sstars(n_stars_milkyway, n_stars_spreadout, n_stars_center):
     """Creates regular static stars background"""
@@ -88,16 +92,17 @@ def make_sstars(n_stars_milkyway, n_stars_spreadout, n_stars_center):
         ranB = random.random()
         brightness = (M_min * (1 - ranB)) ** (-1/(-alpha + 1))
 
-        evenout = random.random()
-        thin_poles = random.random()
+        rate_of_thining = 1
+        evenout = random.random() * rate_of_thining
+        thin_poles = random.random() * rate_of_thining
         if coslong > evenout and coslat > thin_poles:
-            print('yay', num, x, y)
+            #print('yay', num, x, y)
             num += 1
             static_star_list.append((x, y, brightness))
                
     return static_star_list
 
-static_star_list = make_sstars(4000, 500, 500)
+static_star_list = make_sstars(4000, 500, 1000)
     
 def main():
     #
@@ -108,15 +113,18 @@ def main():
                bg = 'black')
     w.pack()
     ##define a time parameter for the universe
-    time_param = 0
+    time_param = time.time()
+    print('time start:', time_param)
     draw_stars(w, static_star_list, 'white')
+    #time for next sgr
+    next_sgr = next(time_iter)
     #print(static_star_list)
     SGR_list = make_SGRs(1)
-    print('SGRs:', SGR_list)
+    #####print('SGRs:', SGR_list)
     #initial drawing of SGRs
     draw_SGRs(w, SGR_list, 'white', time_param)
     #now kick off the animation
-    root.after(1000 // framespersec, update_sky, root, w, SGR_list, time_param)
+    root.after(1000 // framespersec, update_sky, root, w, SGR_list, time_param, next_sgr)
     mainloop()
 
 
@@ -140,8 +148,8 @@ def make_SGRs(n_stars):
 
         #Calculates frequency
         ran2 = random.uniform(-1,1)
-        frequency_mean = 50
-        frequency_range = 1
+        frequency_mean = 10
+        frequency_range = 0.1
         #random.randint(2,100)
         frequency = ((erfinv(ran2) + frequency_mean) * frequency_range)
 
@@ -198,28 +206,32 @@ def draw_SGRs(w, stars, color, time_param):
         sgr = (x, y, period_sec, countdown, canvas_id, Amp, frequency, tow)
         stars[i] = sgr
 
-def next_sgr(rate, period_of_time):
-    simple_ran = random.uniform(0, period_of_time)
-    print(simple_ran)
-    if simple_ran <= rate:
-        return True
-    else:
-        return False
-
-def update_sky(the_root, w, SGRs, time_param):
+def update_sky(the_root, w, SGRs, start_time_param, next_sgr):
     w.delete('all')
     """Draws the Changing parts of the sky -- mostly the SGRs."""
-    print('updating...')
-    draw_stars(w, static_star_list, 'white')
-    Prob_of_sgr = next_sgr(rate_sgr, time_scale)
-    # print('new list:', new_sgr)
-    if Prob_of_sgr:
+
+    # calulates the time at which root updates then converst it to seconds
+    time_param = time.time() - start_time_param
+    print(time_param)
+    print(next_sgr)
+    
+    #Check to see if it is time to create a new sgr
+    if time_param * 1000 >= next_sgr:
         new_sgr = make_SGRs(1)
         SGRs.extend(new_sgr)
-    # print('full list:', SGRs)
-    #draw_SGRs(w, SGRs, 'white', time_param)
+        print('full list:', SGRs)
+        next_time = next(time_iter)
+        next_sgr += next_time
+        
+    #updates everything 
+    print('updating...')
+    draw_stars(w, static_star_list, 'white')
+    draw_SGRs(w, SGRs, 'white', time_param)
+
     w.update()
-    the_root.after(1000 // framespersec, update_sky, the_root, w, SGRs, time_param)
+    if time_param >= 60:
+        the_root.destroy()
+    the_root.after(1000 // framespersec, update_sky, the_root, w, SGRs, start_time_param, next_sgr)
 
 
 if __name__ == '__main__':
