@@ -1,112 +1,131 @@
 import time
 import math
 import random
-from itertools import cycle
-import sys
-
-## we use the tkinter widget set; this seems to come automatically
-## with python3 on ubuntu 16.04, but on some systems one might need to
-## install a package with a name like python3-tk
-from tkinter import *
-from tkinter import ttk
+from tkinter import Canvas, Tk, mainloop
 from scipy.special import erfinv, erf
 
-#sets the canvas width and hight but keep in mind that the stars are
-#not proportional to the night sky they won't get biger with the
-#screen for smaller
-canvas_width = 360 * 3
-canvas_height = 180 * 3
-#the code for the proporttings of the milky way
-milkyway = canvas_height / 2
+random.seed(5)
 
-#additional code for a list. iter returns the next value of the code.
-l = [1, 2, 3]
-l_iter = iter(l)
-#the frames of the code and how long it takes a gama ray to repeat
-#needs to be a function. how long sgrlasts is how long th loop lasts
-#about seconds. Why 60 =
-frames = 25
-srgtime = 0.5
-
-#for wait time
-default_rate = 50.3
-one_year = 365.25
+pixel_per_degrees = 3
+canvas_width = 360 * pixel_per_degrees
+canvas_height = 180 * pixel_per_degrees
+framespersec = 24
+rate_sgr = 5 #days
+time_scale = 365.25 #days
 filmtime = 60
-filmwaitunits = 1
-timeoflastevent = 0
 
-#creates 1000 regular static stars. then apends adding 1000 values to the list.
-def sstars():
-        static_star_list = []
-
-        for i in range(10000):
-         x = random.randint(0, canvas_width)
-         ranlat = random.uniform(-1, 1)
-         y = erfinv(ranlat) * 40 + milkyway
-         radius = (10)
-         center = (x, y)
-         color = ("white")
-         static_star_list.append((x, y))
-
-        for i in range(1000):
-         x = random.randint(0, canvas_width)
-         y = random.randint(0, canvas_height)
-         radius = (10)
-         center = (x, y)
-         color = ("white")
-         static_star_list.append((x, y))
-
-        return static_star_list
-
-def next_event(rate, period_of_time):
+def time_list(rate, period_of_time):
+    next_event = []
+    while sum(next_event) < filmtime * 1000:
         mm = rate / period_of_time
         R1 = random.random()
-        t1 = timeoflastevent -( math.log(1 - R1)) / mm
-        timeprinted = t1 / period_of_time * (filmtime * filmwaitunits)
-        #want to later change code and add on the time of the last event to he new equation so the time of last event is added to time of next event
-        #timeoflastevent =   curently is set to 0
+        #gives you a result in days
+        t1 =  -( math.log(1 - R1)) / mm
+        #gives you the result converted to scale of film (365 days in
+        #milliseconds)
+        timeprinted = (t1 / period_of_time) * (filmtime * 1000)
+        next_event.append(timeprinted)
+    print('sgr appear times:', next_event)
+    return next_event
 
-        #time.sleep makes whole code stop which is bad
-        time.sleep(timeprinted)
-        
-        #next three lines of code only work if definition is inside main loop
-        #round_time = round(timeprinted, 3)
-        #time_ml = round_time * 1000
-        #root.after(int(round_time * 1000), new_srg)
-  
-        
+time_till_next_srg = time_list(rate_sgr, time_scale)
+
+time_iter = iter(time_till_next_srg)
+
+def make_xray_sstars(n_stars_milkyway, n_stars_spreadout, n_stars_center):
+    """Creates regular static stars background"""
+    
+    """Stars centered around the galatic center"""
+    static_star_list = []
+    for i in range(n_stars_milkyway):
+
+        longitude = random.uniform(-180,180)
+        ranlat = random.uniform(-1, 1)
+        latitude = erfinv(ranlat) * 5
+        #latitude = random.uniform(-90, 90)
+        coslat = math.cos( latitude * math.pi / 180)
+        y = (90 - latitude) * pixel_per_degrees
+        x = (( longitude * coslat) + 180 ) * pixel_per_degrees
+
+        M_min = 4.5
+        alpha = 3.5
+        ranB = random.random()
+        brightness = (M_min * (1 - ranB)) ** (-1/(-alpha + 1))
+
+        thin_poles = random.random()
+
+        if coslat > (thin_poles):
+            static_star_list.append((x, y, brightness))
+
+    """Creates stars that are spread all around the screen"""
+    for i in range(n_stars_spreadout):
+
+        longitude = -random.uniform(-180,180)
+        latitude = random.uniform(-90, 90)
+        coslat = math.cos( latitude * math.pi /180 )
+        y = (90 - latitude) * pixel_per_degrees
+        x = (( longitude * coslat) + 180 ) * pixel_per_degrees
+
+        M_min = 4.5
+        alpha = 3.5
+        ranB = random.random()
+        brightness = (M_min * (1 - ranB)) ** (-1/(-alpha + 1))
+
+        thin_poles = random.random()
+
+        if coslat > thin_poles:
+            static_star_list.append((x, y, brightness))
+    num = 1
+    """Creates stars at the galatic center"""
+    for i in range(n_stars_center):
+        longitude = 0
+        latitude = 0
+        coslat = math.cos( latitude * math.pi /180 )
+        y = (90 - latitude) * pixel_per_degrees
+        x = (( longitude * coslat) + 180 ) * pixel_per_degrees
+        brightness = 20
+        static_star_list.append((x, y, brightness))      
+               
+    return static_star_list
+
+
+xray_stars = make_xray_sstars(100, 20, 1)
+    
 def main():
-    ## prepare a basic canvas
+    #
     root = Tk()
     w = Canvas(root,
                width=canvas_width,
                height=canvas_height,
                bg = 'black')
-    w.pack()   	# boiler-plate: we always call pack() on tk windows
-    static_star_list = sstars() # generate these just once
-    for i in range(25*180): 	# 3 minutes if it's 24 frames/sec
-        w.delete('all')
-  
-        ## clear the canvas and then draw the new state
-        color = 'blue'
-        #Where Will the srg happen?????
-        
-        srgx = random.randint(0,canvas_width)
-        srgy = random.randint(0,canvas_height)
-        # first draw the static stars
-        fixed_radius = 1
+    w.pack()
+    ##define a time parameter for the universe
+    time_param = time.time()
+    print('time start:', time_param)
+    draw_stars(w, xray_stars, 'white')
+    #time for next sgr
+    next_sgr = next(time_iter)
+    #print(static_star_list)
+    SGR_list = make_SGRs(1)
+    #####print('SGRs:', SGR_list)
+    #initial drawing of SGRs
+    draw_SGRs(w, SGR_list, 'white', time_param)
+    #now kick off the animation
+    root.after(1000 // framespersec, update_sky, root, w, SGR_list, time_param, next_sgr)
+    mainloop()
 
-        for center in static_star_list:
-            w.create_oval(center[0]-fixed_radius, center[1]-fixed_radius,
-                          center[0]+fixed_radius, center[1]+fixed_radius,
-                          fill=color)
-        #w.update()    
-        
-        
-        # When will srg happen
-        next_event(default_rate, one_year)
-        # then  draw the dynamic star
-        
+
+def make_SGRs(n_stars):
+    """Create SGRs, These are more elaborate than fixed stars."""
+    centerlist = []
+    for i in range(n_stars):
+        #lat and long
+        longitude = random.uniform(-180,180)
+        latitude = random.uniform(-90, 90)
+        coslat = math.cos( latitude * math.pi /180 )
+        sgry = (90 - latitude) * pixel_per_degrees
+        sgrx = (( longitude * coslat) + 180 ) * pixel_per_degrees
+
         #Calculates amplitude
         ran1 = random.uniform(-1,1)
         mean = 10 ** 5
@@ -116,37 +135,91 @@ def main():
 
         #Calculates frequency
         ran2 = random.uniform(-1,1)
-        frequency_mean = 50
-        frequency_range = 1
+        frequency_mean = 10
+        frequency_range = 0.1
         #random.randint(2,100)
         frequency = ((erfinv(ran2) + frequency_mean) * frequency_range)
 
-        mytow = 50
-        def howlongsgrlasts():
-                return 180
+        #Everything else
+        period_sec = random.randint(6, 12)
+        countdown = 0
+        canvas_id = None # id of all object
+        tow = 50
+        
+        #comple into 1 set 
+        centerlist.append((sgrx, sgry, period_sec, countdown, canvas_id, Amp, frequency, tow))
+        print('centerlist', centerlist)
+    return centerlist    
 
-        for i in range(howlongsgrlasts()):
-                w.delete('all')
-                center = (srgx, srgy)
-                #need to add an equation for the aplitude right before
-                #perenthisis.
-                decay = i - 0 / .1
-                rounded_num = round(1)
-                size = Amp * (1 + math.sin(2 * math.pi * frequency * decay))/2
-                decay_size = size * math.exp (-decay/mytow) /1000000
-                var_radius = decay_size
-                w.create_oval(center[0]-var_radius, center[1]-var_radius,
-                              center[0]+var_radius, center[1]+var_radius,
-                              fill=color)
-                w.update()
-                time.sleep(1/25)
-                #update_time = (1/25 * 1000)
-                #time.sleep(decay_size/Amp/(1+math.sin))
-                #root.after(int(decay_size/Amp/(1+math.sin)), root.update())    
+def draw_stars(w, stars, color):
+    """Draw fixed stars on the canvas"""
+    for center in stars:
+            w.create_oval(center[0]-center[2], center[1]-center[2],
+                          center[0]+center[2], center[1]+center[2],
+                          fill=color)
+
+def draw_SGRs(w, stars, color, time_param):
+    """Draw the SGRs. This has some interesting behaviors: and Sgr may
+    have never been drawn before, so we might need to acivate it ad we
+    might need to light it up of dim it."""
+
+    for i, sgr in enumerate(stars):
+        [x, y, period_sec, countdown, canvas_id, Amp, frequency, tow] = sgr
+        # countdown can be -1 (if we never enter this function
+        # beforeor 0 if we nee to do a falash or greater than 0 if we
+        # are quite
+        if countdown >= 0:
+            ##first time for this one -we have to creat oval
+            center = [x, y]
+            decay = countdown - 0 / .1
+            size = Amp * (1 + math.sin(2 * math.pi * frequency * decay))/2
+            decay_size = size * math.exp (-decay/tow) /1000000
+            var_radius = decay_size
+            canvas_id = w.create_oval(center[0]-var_radius, center[1]-var_radius,
+                                      center[0]+var_radius, center[1]+var_radius,
+                                      fill=color)
+            w.itemconfig(canvas_id, state='normal')
+            countdown += 1
+        elif countdown < 0:
+            print('negitive countdown')
+            #countdown = period_sec * framespersec
+            # w.itemconfig(canvas_id, state = 'normal')
+            
+        #else:
+        #      w.itemconfig(canvas_id, state =  'hidden')
+        #     countdown -= 1
+        #now we are done updating all the state informatin
+        #and sending it back into the sgr list
+        sgr = (x, y, period_sec, countdown, canvas_id, Amp, frequency, tow)
+        stars[i] = sgr
+
+def update_sky(the_root, w, SGRs, start_time_param, next_sgr):
+    w.delete('all')
+    """Draws the Changing parts of the sky -- mostly the SGRs."""
+
+    # calulates the time at which root updates then converst it to seconds
+    time_param = time.time() - start_time_param
+    print(time_param)
+    print(next_sgr)
+    
+    #Check to see if it is time to create a new sgr
+    if time_param * 1000 >= next_sgr:
+        new_sgr = make_SGRs(1)
+        SGRs.extend(new_sgr)
+        print('full list:', SGRs)
+        next_time = next(time_iter)
+        next_sgr += next_time
         
-        root.after(10000,lambda: root.destroy())
-        
-        ## update the canvas
-    mainloop()
-   
-main()
+    #updates everything 
+    print('updating...')
+    draw_stars(w, xray_stars, 'white')
+    draw_SGRs(w, SGRs, 'white', time_param)
+
+    w.update()
+    if time_param >= 60:
+        the_root.destroy()
+    the_root.after(1000 // framespersec, update_sky, the_root, w, SGRs, start_time_param, next_sgr)
+
+
+if __name__ == '__main__':
+    main()

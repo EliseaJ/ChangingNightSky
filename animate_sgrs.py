@@ -83,7 +83,6 @@ def make_sstars(n_stars_milkyway, n_stars_spreadout, n_stars_center):
         ranlat = random.uniform(-1, 1)
         latitude = erfinv(ranlat) * 10
         coslat = math.cos( latitude * math.pi /180 )
-        coslong = math.cos( longitude * math.pi /180 )
         y = (90 - latitude) * pixel_per_degrees
         x = (( longitude * coslat) + 180 ) * pixel_per_degrees
 
@@ -93,14 +92,14 @@ def make_sstars(n_stars_milkyway, n_stars_spreadout, n_stars_center):
         brightness = (M_min * (1 - ranB)) ** (-1/(-alpha + 1))
 
         rate_of_thining = 1
-        evenout = random.random() * rate_of_thining
         thin_poles = random.random() * rate_of_thining
-        if coslong > evenout and coslat > thin_poles:
+        if coslat > thin_poles:
             #print('yay', num, x, y)
             num += 1
-            static_star_list.append((x, y, brightness))
+            static_star_list.append((x, y, brightness))      
                
     return static_star_list
+
 
 static_star_list = make_sstars(4000, 500, 1000)
     
