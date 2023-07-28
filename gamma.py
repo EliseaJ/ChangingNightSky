@@ -248,7 +248,9 @@ def draw_pulsars(w, pulsars, color, time_param):
             w.itemconfig(canvas_id, state='normal')
             countdown += 1
             if var_radius <= 0.001:
-                start_time += Amp * random.uniform(0, 20) / 10000
+                #correlation between the amplitude of the burst and
+                #the time untill the next burst
+                start_time += Amp * random.uniform(0, 1440) / 1000
                 countdown -= countdown
 
         elif countdown < 0:
