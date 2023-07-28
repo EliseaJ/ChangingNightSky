@@ -14,6 +14,7 @@ rate_sgr = 5 #days
 time_scale = 365.25 #days
 filmtime = 60
 
+
 def time_list(rate, period_of_time):
     next_event = []
     while sum(next_event) < filmtime * 1000:
@@ -90,19 +91,45 @@ def make_xray_sstars(n_stars_milkyway, n_stars_spreadout, n_stars_center):
 
 
 xray_stars = make_xray_sstars(100, 20, 1)
-    
+def make_pulsars(n_stars):
+    """Create Pulsars, These are only a few and go off randomly."""
+    centerlist = []
+    for i in range(n_stars):
+        longitude = -random.uniform(-180,180)
+        latitude = random.uniform(-90, 90)
+        coslat = math.cos( latitude * math.pi /180 )
+        puly = (90 - latitude) * pixel_per_degrees
+        pulx = (( longitude * coslat) + 180 ) * pixel_per_degrees
+
+        start_time = random.uniform(0,60) * framespersec
+
+        period_sec = random.randint(6, 12)
+        countdown = 0
+        canvas_id = None # id of all object
+        AMP = 0
+        tow = 10
+        centerlist.append((pulx, puly, period_sec, countdown, canvas_id, AMP, tow, start_time))
+    return centerlist
+
+pulsar_list = make_pulsars(5)
+
 def main():
-    #
+    """starts all of the code sets everything up. Update sky is the
+    continuse loop that continues to update everython for 60 seconds"""
     root = Tk()
     w = Canvas(root,
                width=canvas_width,
                height=canvas_height,
                bg = 'black')
     w.pack()
+    
     ##define a time parameter for the universe
     time_param = time.time()
     print('time start:', time_param)
+    
     draw_stars(w, xray_stars, 'white')
+    draw_pulsars(w, pulsar_list, 'blue', time_param)
+    
     #time for next sgr
     next_sgr = next(time_iter)
     #print(static_star_list)
@@ -110,10 +137,41 @@ def main():
     #####print('SGRs:', SGR_list)
     #initial drawing of SGRs
     draw_SGRs(w, SGR_list, 'white', time_param)
+    
     #now kick off the animation
-    root.after(1000 // framespersec, update_sky, root, w, SGR_list, time_param, next_sgr)
+    root.after(1000 // framespersec, update_sky, root, w, SGR_list, pulsar_list, time_param, next_sgr)
     mainloop()
 
+def make_bursters(x_stars):
+    longitude = random.uniform(-180,180)
+    latitude = random.uniform(-90, 90)
+    coslat = math.cos( latitude * math.pi /180 )
+    sgry = (90 - latitude) * pixel_per_degrees
+    sgrx = (( longitude * coslat) + 180 ) * pixel_per_degrees
+    
+    #Calculates amplitude
+    ran1 = random.uniform(-1,1)
+    mean = 10 ** 5
+    rnge = 10 ** 4
+    Amp = ((erfinv(ran1) + mean)* rnge)
+
+    #Calculates frequency
+    ran2 = random.uniform(-1,1)
+    frequency_mean = 10
+    frequency_range = 0.1
+    #random.randint(2,100)
+    frequency = ((erfinv(ran2) + frequency_mean) * frequency_range)
+    
+    #Everything else
+    period_sec = random.randint(6, 12)
+    countdown = 0
+    canvas_id = None # id of all object
+    tow = 50
+    
+    #comple into 1 set 
+    centerlist.append((sgrx, sgry, period_sec, countdown, canvas_id, Amp, frequency, tow))
+    print('centerlist', centerlist)
+    return centerlist    
 
 def make_SGRs(n_stars):
     """Create SGRs, These are more elaborate than fixed stars."""
@@ -131,7 +189,6 @@ def make_SGRs(n_stars):
         mean = 10 ** 5
         rnge = 10 ** 4
         Amp = ((erfinv(ran1) + mean)* rnge)
-
 
         #Calculates frequency
         ran2 = random.uniform(-1,1)
@@ -157,6 +214,49 @@ def draw_stars(w, stars, color):
             w.create_oval(center[0]-center[2], center[1]-center[2],
                           center[0]+center[2], center[1]+center[2],
                           fill=color)
+def draw_pulsars(w, pulsars, color, time_param):
+    """Draw the SGRs. This has some interesting behaviors: and Sgr may
+    have never been drawn before, so we might need to acivate it ad we
+    might need to light it up of dim it."""
+
+    for i, pulsar in enumerate(pulsars):
+        [x, y, period_sec, countdown, canvas_id, Amp, tow, start_time] = pulsar
+        # countdown can be -1 (if we never enter this function
+        # beforeor 0 if we nee to do a falash or greater than 0 if we
+        # are quite
+        """Draw the SGRs. This has some interesting behaviors: and Sgr may
+        have never been drawn before, so we might need to acivate it ad we
+        might need to light it up of dim it."""
+        if start_time > 0:
+            start_time -=1
+            ran1 = random.uniform(-1,1)
+            mean = 10 ** 3
+            rnge = 10 ** 2
+            Amp = ((erfinv(ran1) + mean)* rnge)
+
+
+        elif countdown >= 0:
+            center = [x, y]
+            decay = countdown - 0 / .1
+            size = Amp * (1 + math.sin(2 * math.pi * decay))/2
+            decay_size = size * math.exp (-decay/tow) /100
+            print('ds', decay_size)
+            var_radius = decay_size
+            canvas_id = w.create_oval(center[0]-var_radius, center[1]-var_radius,
+                                      center[0]+var_radius, center[1]+var_radius,
+                                      fill=color)
+            w.itemconfig(canvas_id, state='normal')
+            countdown += 1
+            if var_radius <= 0.001:
+                start_time += Amp * random.uniform(0, 20) / 10000
+                countdown -= countdown
+
+        elif countdown < 0:
+            print('negitive countdown')
+        
+        pulsar = (x, y, period_sec, countdown, canvas_id, Amp, tow, start_time)
+        print(pulsar)
+        pulsars[i] = pulsar
 
 def draw_SGRs(w, stars, color, time_param):
     """Draw the SGRs. This has some interesting behaviors: and Sgr may
@@ -193,7 +293,7 @@ def draw_SGRs(w, stars, color, time_param):
         sgr = (x, y, period_sec, countdown, canvas_id, Amp, frequency, tow)
         stars[i] = sgr
 
-def update_sky(the_root, w, SGRs, start_time_param, next_sgr):
+def update_sky(the_root, w, SGRs, pulsars, start_time_param, next_sgr):
     w.delete('all')
     """Draws the Changing parts of the sky -- mostly the SGRs."""
 
@@ -214,12 +314,14 @@ def update_sky(the_root, w, SGRs, start_time_param, next_sgr):
     print('updating...')
     draw_stars(w, xray_stars, 'white')
     draw_SGRs(w, SGRs, 'white', time_param)
-
+    draw_pulsars(w, pulsars, 'blue', time_param)
+    
     w.update()
     if time_param >= 60:
         the_root.destroy()
-    the_root.after(1000 // framespersec, update_sky, the_root, w, SGRs, start_time_param, next_sgr)
+    the_root.after(1000 // framespersec, update_sky, the_root, w, SGRs, pulsars, start_time_param, next_sgr)
 
 
 if __name__ == '__main__':
     main()
+#things to add and ask: Whoopers steady flickering x raystars, list of x ray and sgr and supernova stars., 
