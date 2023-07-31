@@ -8,4 +8,4 @@ This project show the difference between what you see at night with your naked e
 
 To run the code you can do:
 
-python3 animate_srgs.py
+python3 animate_sgrs.py
