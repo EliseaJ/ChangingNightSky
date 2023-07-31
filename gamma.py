@@ -320,9 +320,9 @@ def update_sky(the_root, w, SGRs, pulsars, start_time_param, next_sgr):
     
     w.update()
     if time_param >= 60:
-        the_root.destroy()
-    the_root.after(1000 // framespersec, update_sky, the_root, w, SGRs, pulsars, start_time_param, next_sgr)
-
+        w.delete('all')
+    else:
+        the_root.after(1000 // framespersec, update_x_sky, the_root, w, SGRs, pulsars, start_time_param, next_sgr)
 
 if __name__ == '__main__':
     main()
