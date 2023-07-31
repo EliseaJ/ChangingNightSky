@@ -8,4 +8,4 @@ This creates a model representing what the sky would look like if we could see s
 
 To run the code enter:
 
-'python3 different_view.py'
+`python3 different_view.py`
