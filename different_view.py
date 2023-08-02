@@ -295,7 +295,6 @@ def time_list(rate, period_of_time):
 
 time_till_next_srg = time_list(rate_sgr, time_scale)
 
-time_iter = iter(time_till_next_srg)
 
 def make_xray_sstars(n_stars_milkyway, n_stars_spreadout, n_stars_center):
     """Creates regular static stars background"""
@@ -303,6 +302,7 @@ def make_xray_sstars(n_stars_milkyway, n_stars_spreadout, n_stars_center):
     """Stars centered around the galatic center"""
     static_star_list = []
     for i in range(n_stars_milkyway):
+        time_iter = iter(time_till_next_srg)
 
         longitude = random.uniform(-180,180)
         ranlat = random.uniform(-1, 1)
