@@ -6,6 +6,20 @@ This creates a model representing what the sky would look like if we could see s
 
 ## Running the code
 
-To run the code enter:
+To run the code enter into a terminal:
 
 `python3 different_view.py`
+
+Inorder to view the Paper and Presentations make sure latex is instaled on your computer.
+
+To view the presentation enter:
+
+`pdflatex paper.tex`
+
+To view the paper enter:
+
+`pdflatex main.tex`
+
+To view the side project presentation enter:
+
+`pdflatex side_project.tex`
