@@ -4,7 +4,7 @@ import random
 from tkinter import Canvas, Tk, mainloop
 from scipy.special import erfinv, erf
 
-random.seed(5)
+random.seed(6)
 
 pixel_per_degrees = 3
 canvas_width = 360 * pixel_per_degrees
@@ -129,7 +129,7 @@ def make_pulsars(n_stars):
     print('pulsars', centerlist)
     return centerlist    
 
-pulsar_list = make_pulsars(5)
+pulsar_list = make_pulsars(4)
 
 def make_bursters(n_stars):
     """Create Pulsars, These are only a few and go off randomly."""
@@ -142,13 +142,18 @@ def make_bursters(n_stars):
         pulx = (( longitude * coslat) + 180 ) * pixel_per_degrees
 
         start_time = random.uniform(0,60) * framespersec
+        M_min = 4.5
+        alpha = 3.5
+        ranB = random.random()
+        brightness = (M_min * (1 - ranB)) ** (-1/(-alpha + 1))
 
+        standard = brightness * 2 
         period_sec = random.randint(6, 12)
         countdown = 0
         canvas_id = None # id of all object
         AMP = 0
         tow = 10
-        centerlist.append((pulx, puly, period_sec, countdown, canvas_id, AMP, tow, start_time))
+        centerlist.append((pulx, puly, period_sec, countdown, canvas_id, AMP, tow, start_time, standard))
     return centerlist
 
 burster_list = make_bursters(5)
@@ -168,7 +173,7 @@ def main():
     print('time start:', time_param)
     
     draw_stars(w, xray_stars, 'white')
-    draw_bursters(w, burster_list, 'blue', time_param)
+    draw_bursters(w, burster_list, 'white', time_param)
     
     #time for next sgr
     next_sgr = next(time_iter)
@@ -177,7 +182,7 @@ def main():
     #####print('SGRs:', SGR_list)
     #initial drawing of SGRs
     draw_SGRs(w, SGR_list, 'white', time_param)
-    draw_pulsars(w, pulsar_list, 'red', time_param)
+    draw_pulsars(w, pulsar_list, 'white', time_param)
     #now kick off the animation
     root.after(1000 // framespersec, update_x_sky, root, w, SGR_list, burster_list, time_param, next_sgr)
     mainloop()
@@ -198,7 +203,7 @@ def draw_pulsars(w, pulsars, color, time_param):
             center = [x, y]
             decay = countdown - 0 / .1
             size = Amp * (1 + math.sin(2 * math.pi * frequency * decay))/2
-            decay_size = size * math.exp (-decay/tow) /10000000
+            decay_size = size /10000000 + 1
             var_radius = decay_size
             canvas_id = w.create_oval(center[0]-var_radius, center[1]-var_radius,
                                       center[0]+var_radius, center[1]+var_radius,
@@ -266,7 +271,7 @@ def draw_bursters(w, bursters, color, time_param):
     might need to light it up of dim it."""
 
     for i, burster in enumerate(bursters):
-        [x, y, period_sec, countdown, canvas_id, Amp, tow, start_time] = burster
+        [x, y, period_sec, countdown, canvas_id, Amp, tow, start_time, standard] = burster
         # countdown can be -1 (if we never enter this function
         # beforeor 0 if we nee to do a falash or greater than 0 if we
         # are quite
@@ -274,18 +279,23 @@ def draw_bursters(w, bursters, color, time_param):
         have never been drawn before, so we might need to acivate it ad we
         might need to light it up of dim it."""
         if start_time > 0:
+            center = [x, y]
             start_time -=1
             ran1 = random.uniform(-1,1)
             mean = 10 ** 3
             rnge = 10 ** 2
             Amp = ((erfinv(ran1) + mean)* rnge)
-
+            var_radius = standard
+            canvas_id = w.create_oval(center[0]-var_radius, center[1]-var_radius,
+                                      center[0]+var_radius, center[1]+var_radius,
+                                      fill=color)
+            w.itemconfig(canvas_id, state='normal')
 
         elif countdown >= 0:
             center = [x, y]
             decay = countdown - 0 / .1
             size = Amp * (1 + math.sin(2 * math.pi * decay))/2
-            decay_size = size * math.exp (-decay/tow) /100
+            decay_size = (size * math.exp (-decay/tow) /1000) + standard
             print('ds', decay_size)
             var_radius = decay_size
             canvas_id = w.create_oval(center[0]-var_radius, center[1]-var_radius,
@@ -297,12 +307,12 @@ def draw_bursters(w, bursters, color, time_param):
                 #correlation between the amplitude of the burst and
                 #the time untill the next burst
                 start_time += Amp * random.uniform(0, framespersec) / 1000
-                countdown -= countdown
+                countdown = 0
 
         elif countdown < 0:
             print('negitive countdown')
         
-        burster = (x, y, period_sec, countdown, canvas_id, Amp, tow, start_time)
+        burster = (x, y, period_sec, countdown, canvas_id, Amp, tow, start_time, standard)
         print(burster)
         bursters[i] = burster
 
@@ -360,11 +370,10 @@ def update_x_sky(the_root, w, SGRs, bursters, start_time_param, next_sgr):
         
     #updates everything 
     print('updating...')
-    #draw_stars(w, xray_stars, 'white')
-    #draw_SGRs(w, SGRs, 'white', time_param)
-    draw_bursters(w, bursters, 'blue', time_param)
-    
-    draw_pulsars(w, pulsar_list, 'red', time_param)
+    draw_stars(w, xray_stars, 'white')
+    draw_bursters(w, bursters, 'white', time_param)
+    draw_pulsars(w, pulsar_list, 'white', time_param)
+    draw_SGRs(w, SGRs, 'white', time_param)
     w.update()
     if time_param >= 60:
         w.delete('all')
