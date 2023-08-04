@@ -1,0 +1,12 @@
+\babel@toc {english}{}\relax 
+\beamer@sectionintoc {1}{Some \LaTeX {} Examples}{2}{0}{1}
+\beamer@subsectionintoc {1}{1}{Static Night Sky}{2}{0}{1}
+\beamer@sectionintoc {2}{Some \LaTeX {} Examples}{3}{0}{2}
+\beamer@subsectionintoc {2}{1}{Figure}{3}{0}{2}
+\beamer@subsectionintoc {2}{2}{Figure}{4}{0}{2}
+\beamer@subsectionintoc {2}{3}{Neutron Stars}{5}{0}{2}
+\beamer@sectionintoc {3}{Some \LaTeX {} Examples}{12}{0}{3}
+\beamer@subsectionintoc {3}{1}{Figure}{12}{0}{3}
+\beamer@sectionintoc {4}{Some \LaTeX {} Examples}{12}{0}{4}
+\beamer@subsectionintoc {4}{1}{Mathematics}{14}{0}{4}
+\beamer@subsectionintoc {4}{2}{Mathematics}{17}{0}{4}
