@@ -29,7 +29,7 @@
 %% \documentclass[final,3p,times,authoryear]{elsarticle}
 %% \documentclass[final,3p,times,twocolumn,authoryear]{elsarticle}
 %% \documentclass[final,5p,times,authoryear]{elsarticle}
- \documentclass[final,8p,times,twocolumn,authoryear]{elsarticle}
+ \documentclass[final,6p,times,twocolumn,authoryear]{elsarticle}
 
 %% For including figures, graphicx.sty has been loaded in
 %% elsarticle.cls. If you prefer to use the old commands
@@ -167,6 +167,10 @@ Using probability distribution – probability density function – I can simula
         
 The problem with this is that not everything is represented by a normal probability distribution. There could be more values on one side than the other. This is usually because the mean, median, and mode are not always the same value. In a normal probability distribution the mean, median, and mode are all the same value. 
 
+\subsection{Optical Night Sky}
+In astronomy stars are shown using the Galactic Coordinate system. In this system the Latitude (b) goes from 90 to -90. Longitude (l) starts at 0 in the center and extends left to 180. This continues on the furthest right side of the graph going from 180 to 360 back at the center of the model. In my model I changed the longitude to extend from 180 to -180 to make it easier to pick values gathered around the center of the galaxy. 
+In my model there is a drop down menu with a couple of options. The Static Sky option shows a model of the sky as we normally observe it. After sixty seconds you can switch the screen you are lookin at by clicking the clear all button and viewing the X-ray sky. This shows the X-ray sources in the night sky. 
+There are three different distributions of stars in the static star sky. There are stars that are randomly placed over the whole sky. The majority of stars are centered around the milky way. A large number of stars are centered around the galactic center. There is one dynamic star in the static night sky; there is a flare star located longitude (l) 100 and latitude (b) 30. This flare star is a very active star releasing lots of energy. As shown in the model we can’t see the change in star size because the star is too far away and the change is not enough. If you would like to see this star magnified in the menu there's a button called Flare star. This button shows another movie with the flare star magnified by a factor of ten so you can see the effects of the flare star. This gives us a general representation of the stars in the milky galaxy.
 
 \subsection{The Night Time Sky}
 
@@ -208,74 +212,56 @@ My model shows the view of the galaxy from earth using the galactic coordinate s
     Q = \frac{\sigma_v \times \kappa}{\pi \times G \times \Sigma}
 \end{equation}
 
-\section{Results}
-%%\label{}
-\lipsum[2]
-
-\subsection{Subsection title}
-\lipsum[3]
-
-\begin{table}
-\begin{tabular}{l c c c} 
- \hline
- Source & RA (J2000) & DEC (J2000) & $V_{\rm sys}$ \\ 
-        & [h,m,s]    & [o,','']    & \kms          \\
- \hline
- NGC\,253 & 	00:47:33.120 & -25:17:17.59 & $235 \pm 1$ \\ 
- M\,82 & 09:55:52.725, & +69:40:45.78 & $269 \pm 2$ 	 \\ 
- \hline
-\end{tabular}
-\caption{Random table with galaxies coordinates and velocities, Number the tables consecutively in
-accordance with their appearance in the text and place any table notes below the table body. Please avoid using vertical rules and shading in table cells.
-}
-\label{Table1}
-\end{table}
-
-
-\section{Discussion/Results}
-%%\label{}
-\lipsum[4]
-
 \section{Summary and conclusions}
 %%\label{}
 \subsection{Succsuss}
-\subsection{Limitations}
-\subsection{Futurework}
+My model is a simple representation of some of the X-ray emitting stars in our galaxy. It shows how dynamic the universe is. Aside from the occasional passing comet our eyes fail to inform us of many of the changes occurring. It helps us to have a better understanding of the universe and interpret information received from satellites.
 
-\section{References}
-All my references have 
+\subsection{Limitations}
+
+One of the biggest constraints of this project was time. The model is relatively simple and gives a direct translation of what satellites receive to what it would look like in the sky. Models are important for helping us to improve our understanding of the universe. To improve the model it should model the actual mechanics of the stars and how different variables can affect the output – gamma and x-ray readings received by earth – to help us better interpret those readings. 
+	A monte carlo is a good model for something with so many variables; however, it then no longer is a view of our universe but a similar one. It is impossible to model every single atom in a neutron star. It would require too much computational power from a computer. 
+
+\subsection{Futurework}
+In the future I would like to add different types of stars that also emit X-ray. I would like to experiment with different time frames. With my current time frame of a year within 60 seconds we miss out on some of the faster spinning objects. For example, millisecond pulsars have a spin speed faster than I could show in my presentation. I would also like to make my model more user friendly by making the user able to end the movie when they like as well as make the model able to replay the X-ray pulsar which is currently impossible. 
+
+%\section{References}
+%All my references have 
 
 \section*{Acknowledgements}
 Thanks to ...
 
 %% The Appendices part is started with the command \appendix;
 %% appendix sections are then done as normal sections
-\appendix
-
-\section{Appendix title 1}
-%% \label{}
-
-\section{Appendix title 2}
-%% \label{}
 
 %% If you have bibdatabase file and want bibtex to generate the
 %% bibitems, please use
 %%
-\bibliographystyle{elsarticle-harv} 
-\bibliography{example}
+%\bibliographystyle{elsarticle-harv} 
+%\bibliography{example}
 
 %% else use the following coding to input the bibitems directly in the
 %% TeX file.
 
-%%\begin{thebibliography}{00}
+\begin{thebibliography}{00}
+Duncan, R. C. (2003). `magnetars’, soft gamma repeaters. `MAGNETARS’, SOFT GAMMA REPEATERS \&amp; VERY STRONG MAGNETIC FIELDS Robert C. Duncan, University of Texas at Austin. http://solomon.as.utexas.edu/magnetar.html 
 
-%% \bibitem[Author(year)]{label}
-%% For example:
+Galactic coordinate system: Cosmos. Galactic Coordinate System | COSMOS. (n.d.). https://astronomy.swin.edu.au/cosmos/G/Galactic+Coordinate+System
+Jenner, L. (2016, July 7). NASA’s Hubble captures the beating heart of the Crab Nebula. NASA. https://www.nasa.gov/feature/goddard/2016/nasas-hubble-captures-the-beating-heart-of-the-crab-nebula 
+Lewin, W. H., Paradijs, J. V.,\&amp; Taam, R. E. (1993). X-Ray Bursts. 1993SSRv...62..223L page 227. https://articles.adsabs.harvard.edu//full/1993SSRv...62..223L/0000227.000.html 
+Reddy, F. (2023, March 27). NASA missions study what may be a 1-in-10,000-year gamma-ray burst. NASA. https://www.nasa.gov/feature/goddard/2023/nasa-missions-study-what-may-be-a-1-in-10000-year-gamma-ray-burst 
+Soft gamma repeater: Cosmos. Soft Gamma Repeater | COSMOS. (n.d.-a). https://astronomy.swin.edu.au/cosmos/s/Soft+Gamma+Repeater\#:~:text=Such\%20a\%20rapid\%20spin\%2Ddown,become\%20anomalous\%20X\%2Dray\%20pulsars 
+Soft gamma repeater: Cosmos. Soft Gamma Repeater | COSMOS. (n.d.-b). https://astronomy.swin.edu.au/cosmos/s/Soft+Gamma+Repeater 
+Sokol, J. (2021, April 8). Nature’s most magnetic objects, ripped apart in starquakes, can unleash ... A Star is Torn. https://www.science.org/content/article/nature-s-most-magnetic-objects-ripped-apart-starquakes-can-unleash-powerful-flashes 
+Wikimedia Foundation. (2023a, April 4). Sagittarius A. Wikipedia. https://en.wikipedia.org/wiki/Sagittarius\_A 
+Wikimedia Foundation. (2023b, April 7). X-ray binary. Wikipedia. https://en.wikipedia.org/wiki/X-ray\_binary 
+Wikimedia Foundation. (2023c, July 22). Normal distribution. Wikipedia. https://en.wikipedia.org/wiki/Normal\_distribution 
+Wikimedia Foundation. (2023d, July 23). Gamma-ray burst. Wikipedia. https://en.wikipedia.org/wiki/Gamma-ray\_burst 
+Wikimedia Foundation. (2023e, July 24). Magnetar. Wikipedia. https://en.wikipedia.org/wiki/Magnetar 
+Wikimedia Foundation. (2023f, July 25). Neutron Star. Wikipedia. https://en.wikipedia.org/wiki/Neutron\_star 
+Wikimedia Foundation. (2023g, August 4). X-ray pulsar. Wikipedia. https://en.wikipedia.org/wiki/X-ray\_pulsar\#:~:text=X\%2Dray\%20pulsars\%20or\%20accretion,as\%20much\%20as\%20several\%20minutes 
 
-%% \bibitem[Aladro et al.(2015)]{Aladro15} Aladro, R., Martín, S., Riquelme, D., et al. 2015, \aas, 579, A101
-
-
-%%\end{thebibliography}
+\end{thebibliography}
 
 \end{document}
 

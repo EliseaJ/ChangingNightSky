@@ -14,11 +14,11 @@ Inorder to view the Paper and Presentations make sure latex is instaled on your 
 
 To view the presentation enter:
 
-`pdflatex paper.tex`
+`pdflatex presentation.tex`
 
 To view the paper enter:
 
-`pdflatex main.tex`
+`pdflatex paper.tex`
 
 To view the side project presentation enter:
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.7.26)  4 AUG 2023 10:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.7.26)  5 AUG 2023 00:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -86,7 +86,7 @@ File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 \@sep=\skip49
 \@@sep=\skip50
 
-(/usr/share/texlive/texmf-dist/tex/latex/natbib/natbib.sty
+(./paper.spl) (/usr/share/texlive/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip51
 \bibsep=\skip52
@@ -431,15 +431,19 @@ File: ot1txr.fd 2000/12/15 v3.1
 )
 
 LaTeX Warning: Unused global option(s):
-    [8p].
+    [6p].
 
-No file paper.aux.
+(./paper.aux
+
+LaTeX Warning: Label `fig_mom0' multiply defined.
+
+)
 \openout1 = `paper.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/txmi/m/it on input line 56.
 LaTeX Font Info:    Trying to load font information for OML+txmi on input line 
 56.
-(/usr/share/texlive/texmf-dist/tex/latex/txfonts/omltxmi.fd
+ (/usr/share/texlive/texmf-dist/tex/latex/txfonts/omltxmi.fd
 File: omltxmi.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    ... okay on input line 56.
@@ -536,41 +540,239 @@ Overfull \hbox (1.90001pt too wide) has occurred while \output is active
 <1024px-norm.png, id=10, 1027.84pt x 656.4525pt>
 File: 1024px-norm.png Graphic file (type png)
 <use 1024px-norm.png>
-Package pdftex.def Info: 1024px-norm.png  used on input line 175.
+Package pdftex.def Info: 1024px-norm.png  used on input line 179.
 (pdftex.def)             Requested size: 187.59714pt x 119.8091pt.
 <800px-dist.png, id=12, 803.0pt x 512.91624pt>
 File: 800px-dist.png Graphic file (type png)
 <use 800px-dist.png>
-Package pdftex.def Info: 800px-dist.png  used on input line 182.
+Package pdftex.def Info: 800px-dist.png  used on input line 186.
 (pdftex.def)             Requested size: 187.59714pt x 119.82312pt.
  [2 <./1024px-norm.png> <./800px-dist.png>] [3]
-No file paper.bbl.
-[4
 
-] (./paper.aux)
+Package natbib Warning: Empty `thebibliography' environment on input line 264.
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Underfull \hbox (badness 2556) in paragraph at lines 247--264
+[]\OT1/txr/m/n/10 Duncan, R. C. (2003). `mag-ne-tars', soft gamma
+ []
+
+
+Underfull \hbox (badness 4205) in paragraph at lines 247--264
+\OT1/txr/m/n/10 re-peaters. `MAG-NE-TARS', SOFT GAMMA RE-
+ []
+
+
+Underfull \hbox (badness 2990) in paragraph at lines 247--264
+\OT1/txr/m/n/10 PEATERS &amp; VERY STRONG MAG-NETIC
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 Austin. http://solomon.as.utexas.edu/magnetar.html
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 Galac-tic co-or-di-nate sys-tem: Cos-mos. Galac-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 tic Co-or-di-nate Sys-tem | COS-MOS. (n.d.).
+ []
+
+
+Overfull \hbox (65.36996pt too wide) in paragraph at lines 247--264
+\OT1/txr/m/n/10 https://astronomy.swin.edu.au/cosmos/G/Galactic+Coordinate+Syst
+em
+ []
+
+
+Underfull \hbox (badness 5446) in paragraph at lines 247--264
+\OT1/txr/m/n/10 the beat-ing heart of the Crab Neb-ula. NASA.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 https://www.nasa.gov/feature/goddard/2016/nasas-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 hubble-captures-the-beating-heart-of-the-crab-nebula
+ []
+
+
+Overfull \hbox (99.85999pt too wide) in paragraph at lines 247--264
+\OT1/txr/m/n/10 https://articles.adsabs.harvard.edu//full/1993SSRv...62..223L/0
+000227.000.html
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 Reddy, F. (2023, March 27). NASA
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 mis-sions study what may be a 1-in-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 10,000-year gamma-ray burst. NASA.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 https://www.nasa.gov/feature/goddard/2023/nasa-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 missions-study-what-may-be-a-1-in-10000-year-
+ []
+
+
+Underfull \hbox (badness 3482) in paragraph at lines 247--264
+\OT1/txr/m/n/10 gamma-ray-burst Soft gamma re-peater: Cos-mos.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 Soft Gamma Re-peater | COS-MOS. (n.d.-a).
+ []
+
+
+Overfull \hbox (432.32999pt too wide) in paragraph at lines 247--264
+\OT1/txr/m/n/10 https://astronomy.swin.edu.au/cosmos/s/Soft+Gamma+Repeater#: :t
+ext=Such%20a%20rapid%20spin%2Ddown,become%20anomalous%20X%2Dray%20pulsars
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 Soft gamma re-peater: Cos-mos. Soft
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 Gamma Re-peater | COS-MOS. (n.d.-b).
+ []
+
+
+Overfull \hbox (38.69997pt too wide) in paragraph at lines 247--264
+\OT1/txr/m/n/10 https://astronomy.swin.edu.au/cosmos/s/Soft+Gamma+Repeater
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 s-most-magnetic-objects-ripped-apart-starquakes-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 can-unleash-powerful-flashes Wiki-me-dia Foun-da-
+ []
+
+
+Underfull \hbox (badness 2653) in paragraph at lines 247--264
+\OT1/txr/m/n/10 tion. (2023a, April 4). Sagit-tar-ius A. Wikipedia.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 https://en.wikipedia.org/wiki/Sagittarius[]A Wiki-
+ []
+
+
+Underfull \hbox (badness 5175) in paragraph at lines 247--264
+\OT1/txr/m/n/10 me-dia Foun-da-tion. (2023b, April 7). X-ray bi-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 nary. Wikipedia. https://en.wikipedia.org/wiki/X-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 ray[]binary Wiki-me-dia Foun-da-tion. (2023c,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 July 22). Nor-mal dis-tri-bu-tion. Wikipedia.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 https://en.wikipedia.org/wiki/Normal[]distribution
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 Wiki-me-dia Foun-da-tion. (2023d, July
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 23). Gamma-ray burst. Wikipedia.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 https://en.wikipedia.org/wiki/Gamma-ray[]burst
+ []
+
+
+Underfull \hbox (badness 1939) in paragraph at lines 247--264
+\OT1/txr/m/n/10 Wiki-me-dia Foun-da-tion. (2023e, July 24). Mag-ne-
+ []
+
+
+Underfull \hbox (badness 2644) in paragraph at lines 247--264
+\OT1/txr/m/n/10 Wikipedia. https://en.wikipedia.org/wiki/Neutron[]star
+ []
+
+
+Underfull \hbox (badness 1939) in paragraph at lines 247--264
+\OT1/txr/m/n/10 Wiki-me-dia Foun-da-tion. (2023g, Au-gust 4). X-ray
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--264
+\OT1/txr/m/n/10 pul-sar. Wikipedia. https://en.wikipedia.org/wiki/X-
+ []
+
+
+Overfull \hbox (198.11005pt too wide) in paragraph at lines 247--264
+\OT1/txr/m/n/10 ray[]pulsar#: :text=X%2Dray%20pulsars%20or%20accretion,as%20muc
+h%20as%20several%20minutes 
+ []
+
+[4] (./paper.aux)
+
+LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 4147 strings out of 478287
- 62978 string characters out of 5849289
- 440786 words of memory out of 5000000
- 22287 multiletter control sequences out of 15000+600000
+ 4148 strings out of 478287
+ 62994 string characters out of 5849289
+ 439855 words of memory out of 5000000
+ 22285 multiletter control sequences out of 15000+600000
  499185 words of font info for 99 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 70i,10n,76p,1063b,297s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 70i,8n,76p,1063b,297s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/public/txfonts/rtxb.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/txfonts/rtxmi.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/txfonts/rtxr.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/txf
-onts/txsy.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (4 pages, 162846 bytes).
+e/texmf-dist/fonts/type1/public/txfonts/rtxmi.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/txfonts/rtxr.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/txfonts/txsy.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
+utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on paper.pdf (4 pages, 163883 bytes).
 PDF statistics:
- 58 PDF objects out of 1000 (max. 8388607)
- 33 compressed objects within 1 object stream
+ 53 PDF objects out of 1000 (max. 8388607)
+ 30 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
